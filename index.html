@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexCore Tech — Proposta Comercial de Hardware</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+  :root {
+    --bg: #0a0e1a;
+    --bg2: #111827;
+    --bg3: #1a2235;
+    --accent: #00d4ff;
+    --accent2: #7c3aed;
+    --accent3: #10b981;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --border: rgba(255,255,255,0.08);
+    --card: rgba(255,255,255,0.04);
+    --entry: #0ea5e9;
+    --mid: #f59e0b;
+    --high: #ef4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,14,26,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.2rem; font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--text); }
+  .nav-links { display: flex; gap: 0.25rem; }
+  .nav-links a {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 0.8rem; font-weight: 500;
+    padding: 0.4rem 0.75rem; border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); background: var(--card); }
+  .nav-links a.active { color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,212,255,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(124,58,237,0.10) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 800px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.25);
+    color: var(--accent); border-radius: 100px;
+    padding: 0.35rem 1rem; font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero-badge::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--accent); border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700; line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+  .hero h1 .glow { color: var(--accent); }
+  .hero p {
+    font-size: 1.1rem; color: var(--text-muted);
+    max-width: 560px; margin: 0 auto 2.5rem;
+  }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 3rem;
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2rem; font-weight: 700;
+    color: var(--accent);
+    display: block;
+  }
+  .hero-stat .lbl {
+    font-size: 0.78rem; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    color: var(--text-muted); font-size: 0.75rem; animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent);
+    display: flex; align-items: center; gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .section-label::before {
+    content: ''; width: 20px; height: 1px; background: var(--accent);
+  }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    font-weight: 700; letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .section-desc { color: var(--text-muted); font-size: 1rem; max-width: 560px; margin-bottom: 3rem; }
+
+  /* ── EMPRESA ── */
+  .empresa-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+  }
+  .empresa-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 2rem;
+    position: relative; overflow: hidden;
+  }
+  .empresa-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .empresa-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem;
+    color: var(--text);
+  }
+  .empresa-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; }
+  .logo-area {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;
+  }
+  .logo-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: 900;
+    font-family: 'Space Grotesk', sans-serif;
+    color: #000; flex-shrink: 0;
+  }
+  .logo-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.4rem; font-weight: 700; color: var(--accent);
+  }
+  .logo-name span { color: var(--text); }
+  .tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .tag {
+    background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.2);
+    color: var(--accent); border-radius: 100px;
+    padding: 0.2rem 0.75rem; font-size: 0.75rem; font-weight: 500;
+  }
+  .cliente-perfil {
+    display: flex; align-items: flex-start; gap: 1rem; padding: 1.25rem;
+    background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2);
+    border-radius: 12px; margin-top: 1rem;
+  }
+  .cliente-icon { font-size: 1.8rem; }
+  .cliente-info h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; }
+  .cliente-info p { font-size: 0.85rem; color: var(--text-muted); }
+
+  /* ── EQUIPAMENTOS ── */
+  .equip-tabs {
+    display: flex; gap: 0.5rem; margin-bottom: 2rem;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 0.35rem;
+    width: fit-content;
+  }
+  .equip-tab {
+    padding: 0.6rem 1.4rem; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 600; cursor: pointer;
+    border: none; background: transparent; color: var(--text-muted);
+    transition: all 0.2s;
+  }
+  .equip-tab.active { color: #000; }
+  .equip-tab[data-cat="entrada"].active { background: var(--entry); }
+  .equip-tab[data-cat="medio"].active { background: var(--mid); }
+  .equip-tab[data-cat="alto"].active { background: var(--high); }
+  .equip-panel { display: none; }
+  .equip-panel.active { display: block; }
+
+  .equip-header {
+    display: flex; align-items: center; gap: 1.5rem;
+    padding: 1.75rem 2rem; border-radius: 16px 16px 0 0;
+    border: 1px solid var(--border); border-bottom: none;
+    background: var(--card);
+    position: relative; overflow: hidden;
+  }
+  .equip-header::after {
+    content: ''; position: absolute; right: -40px; top: -40px;
+    width: 200px; height: 200px; border-radius: 50%;
+    opacity: 0.06;
+  }
+  .equip-header[data-cat="entrada"]::after { background: var(--entry); }
+  .equip-header[data-cat="medio"]::after { background: var(--mid); }
+  .equip-header[data-cat="alto"]::after { background: var(--high); }
+  .equip-badge {
+    padding: 0.4rem 1rem; border-radius: 100px;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .equip-badge.entrada { background: rgba(14,165,233,0.15); color: var(--entry); border: 1px solid rgba(14,165,233,0.3); }
+  .equip-badge.medio { background: rgba(245,158,11,0.15); color: var(--mid); border: 1px solid rgba(245,158,11,0.3); }
+  .equip-badge.alto { background: rgba(239,68,68,0.15); color: var(--high); border: 1px solid rgba(239,68,68,0.3); }
+  .equip-header h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.3rem; font-weight: 700;
+  }
+  .equip-header p { font-size: 0.85rem; color: var(--text-muted); }
+
+  .specs-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 0; border: 1px solid var(--border); border-top: none; border-radius: 0 0 16px 16px;
+    overflow: hidden;
+  }
+  .spec-item {
+    padding: 1.1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 0.3rem;
+    background: var(--bg2);
+    transition: background 0.2s;
+  }
+  .spec-item:hover { background: var(--bg3); }
+  .spec-label {
+    font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-muted);
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .spec-label .icon { font-size: 0.9rem; }
+  .spec-value { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+  .spec-justify { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem; line-height: 1.5; }
+
+  /* ── PREÇOS ── */
+  .price-tabs {
+    display: flex; gap: 0.5rem; margin-bottom: 2rem;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 0.35rem;
+    width: fit-content;
+  }
+  .price-tab {
+    padding: 0.55rem 1.2rem; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 600; cursor: pointer;
+    border: none; background: transparent; color: var(--text-muted);
+    transition: all 0.2s;
+  }
+  .price-tab.active { background: var(--bg3); color: var(--text); }
+  .price-panel { display: none; }
+  .price-panel.active { display: block; }
+
+  .price-table-wrap { overflow-x: auto; }
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+  th {
+    padding: 0.75rem 1rem; text-align: left;
+    font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+  td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  tr:hover td { background: var(--card); }
+  .price-total-row td {
+    font-weight: 700; color: var(--text);
+    background: var(--bg3) !important;
+    border-top: 2px solid var(--border);
+  }
+  .winner-badge {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.25);
+    color: var(--accent3); border-radius: 100px;
+    padding: 0.2rem 0.6rem; font-size: 0.72rem; font-weight: 600;
+  }
+  .winner-badge::before { content: '★'; }
+  .choice-card {
+    margin-top: 1.5rem; padding: 1.25rem 1.5rem;
+    background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 12px; display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .choice-icon { font-size: 1.5rem; }
+  .choice-text h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; color: var(--accent3); }
+  .choice-text p { font-size: 0.85rem; color: var(--text-muted); }
+
+  /* ── PROPOSTA ── */
+  .invest-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2.5rem;
+  }
+  .invest-card {
+    border-radius: 16px; padding: 1.75rem;
+    border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .invest-card.entrada { border-color: rgba(14,165,233,0.3); background: rgba(14,165,233,0.05); }
+  .invest-card.medio { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.05); }
+  .invest-card.alto { border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.05); }
+  .invest-card .cat-label {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+  .invest-card.entrada .cat-label { color: var(--entry); }
+  .invest-card.medio .cat-label { color: var(--mid); }
+  .invest-card.alto .cat-label { color: var(--high); }
+  .invest-card .qty {
+    font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;
+  }
+  .invest-card .unit-price {
+    font-size: 0.95rem; color: var(--text-muted); margin-bottom: 0.25rem;
+  }
+  .invest-card .total-price {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.8rem; font-weight: 700; color: var(--text);
+    margin-top: 0.5rem;
+  }
+  .invest-total {
+    background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(124,58,237,0.1));
+    border: 1px solid rgba(0,212,255,0.2);
+    border-radius: 16px; padding: 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .invest-total h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 600; }
+  .invest-total p { color: var(--text-muted); font-size: 0.875rem; margin-top: 0.25rem; }
+  .invest-total .grand-total {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.5rem; font-weight: 700;
+    color: var(--accent); letter-spacing: -0.02em;
+  }
+
+  /* ── CRITÉRIOS ── */
+  .criteria-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;
+  }
+  .criteria-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem;
+  }
+  .criteria-card .criteria-header { display: flex; justify-content: space-between; margin-bottom: 1rem; align-items: center; }
+  .criteria-card h4 { font-size: 0.95rem; font-weight: 600; }
+  .criteria-card .weight { font-size: 1.1rem; font-weight: 700; color: var(--accent); }
+  .criteria-bar-bg {
+    background: rgba(255,255,255,0.08); border-radius: 100px; height: 6px; overflow: hidden;
+  }
+  .criteria-bar { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+
+  /* ── CONCLUSÃO ── */
+  .conclusao-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; padding: 3rem; max-width: 800px;
+    position: relative; overflow: hidden;
+  }
+  .conclusao-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+  }
+  .conclusao-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.3rem; font-weight: 700; margin-bottom: 1.25rem;
+  }
+  .conclusao-card p { color: var(--text-muted); margin-bottom: 1rem; line-height: 1.8; }
+  .refs { margin-top: 2rem; }
+  .refs h4 { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 0.75rem; }
+  .refs-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .refs-list a {
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text-muted); border-radius: 8px;
+    padding: 0.35rem 0.75rem; font-size: 0.8rem; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .refs-list a:hover { color: var(--accent); border-color: rgba(0,212,255,0.3); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem; text-align: center;
+    color: var(--text-muted); font-size: 0.82rem;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    max-width: 1100px; margin: 0 auto;
+    border: none; border-top: 1px solid var(--border);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .empresa-grid { grid-template-columns: 1fr; }
+    .invest-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    .invest-total { flex-direction: column; gap: 1rem; text-align: center; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Nex<span>Core</span></div>
+  <div class="nav-links">
+    <a href="#empresa" class="nav-link">Empresa</a>
+    <a href="#equipamentos" class="nav-link">Equipamentos</a>
+    <a href="#precos" class="nav-link">Preços</a>
+    <a href="#proposta" class="nav-link">Proposta</a>
+    <a href="#conclusao" class="nav-link">Conclusão</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Proposta Comercial de Hardware — 2026</div>
+    <h1>Tecnologia certa<br>para cada <span class="glow">demanda</span></h1>
+    <p>NexCore Tech apresenta uma proposta completa de equipamentos de informática em três categorias de desempenho, desenvolvida para Sistemas de Informação — 1º Ano.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="num">3</span>
+        <span class="lbl">Categorias</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">3</span>
+        <span class="lbl">Fornecedores</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">15</span>
+        <span class="lbl">Equipamentos</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">18/06</span>
+        <span class="lbl">Apresentação</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <span>↓</span>
+  </div>
+</div>
+
+<!-- EMPRESA -->
+<section id="empresa">
+  <div class="section-label">01 — Sobre Nós</div>
+  <h2 class="section-title">Empresa & Perfil do Cliente</h2>
+  <p class="section-desc">Conheça a NexCore Tech e o cliente para quem esta proposta foi elaborada.</p>
+  <div class="empresa-grid">
+    <div class="empresa-card">
+      <div class="logo-area">
+        <div class="logo-icon">N</div>
+        <div>
+          <div class="logo-name">Nex<span>Core</span> Tech</div>
+          <div style="font-size:0.78rem;color:var(--text-muted)">Soluções em Tecnologia da Informação</div>
+        </div>
+      </div>
+      <p>A NexCore Tech é uma empresa especializada em consultoria, montagem e fornecimento de equipamentos de informática. Atendemos desde usuários domésticos até grandes corporações, oferecendo soluções customizadas com suporte técnico dedicado e garantia estendida.</p>
+      <p style="margin-top:0.75rem">Fundada em 2018, a NexCore já entregou mais de 1.200 estações de trabalho para clientes em todo o Brasil, com índice de satisfação de 97%.</p>
+      <div class="tag-list">
+        <span class="tag">Montagem sob medida</span>
+        <span class="tag">Suporte técnico</span>
+        <span class="tag">Garantia estendida</span>
+        <span class="tag">Consultoria TI</span>
+      </div>
+    </div>
+    <div class="empresa-card">
+      <h3>Perfil do Cliente</h3>
+      <p>A proposta foi elaborada para atender uma <strong>agência de design gráfico e comunicação visual</strong> em expansão, com 12 colaboradores, que necessita renovar seu parque tecnológico.</p>
+      <div class="cliente-perfil" style="margin-top:1rem">
+        <div class="cliente-icon">🎨</div>
+        <div class="cliente-info">
+          <h4>Estúdio Criativo — Agência de Design</h4>
+          <p>A empresa trabalha com criação gráfica, edição de vídeo e produção de conteúdo digital. Precisam de máquinas para diferentes perfis: recepção/administrativo, designers intermediários e editores de vídeo 4K.</p>
+        </div>
+      </div>
+      <div style="margin-top:1rem;padding:1rem;background:var(--card);border-radius:10px;border:1px solid var(--border)">
+        <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.5rem">NECESSIDADES IDENTIFICADAS</div>
+        <div style="font-size:0.85rem;line-height:1.8">
+          ✦ 5× PCs de entrada (atendimento, financeiro)<br>
+          ✦ 5× PCs médio desempenho (designers)<br>
+          ✦ 5× PCs alto desempenho (editores de vídeo)
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- EQUIPAMENTOS -->
+<section id="equipamentos">
+  <div class="section-label">02 — Especificação Técnica</div>
+  <h2 class="section-title">Equipamentos por Categoria</h2>
+  <p class="section-desc">Cada equipamento foi especificado e justificado com base nos conceitos estudados em aula.</p>
+
+  <div class="equip-tabs">
+    <button class="equip-tab active" data-cat="entrada" onclick="showEquip('entrada')">🔵 Entrada</button>
+    <button class="equip-tab" data-cat="medio" onclick="showEquip('medio')">🟡 Médio</button>
+    <button class="equip-tab" data-cat="alto" onclick="showEquip('alto')">🔴 Alto Desempenho</button>
+  </div>
+
+  <!-- ENTRADA -->
+  <div class="equip-panel active" id="panel-entrada">
+    <div class="equip-header" data-cat="entrada">
+      <div>
+        <span class="equip-badge entrada">Entrada</span>
+        <h3 style="margin-top:0.5rem">NexCore Basic E1</h3>
+        <p>Tarefas de escritório: e-mail, planilhas, navegação e atendimento ao cliente</p>
+      </div>
+    </div>
+    <div class="specs-grid">
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">⚙️</span> Processador (CPU)</div>
+        <div class="spec-value">Intel Core i3-13100</div>
+        <div class="spec-justify">4 núcleos / 8 threads, 3.4–4.5 GHz. Suficiente para tarefas de escritório sem gargalos em multitarefa leve. Baixo TDP (60W) garante menor consumo energético.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">🧠</span> Memória RAM</div>
+        <div class="spec-value">8 GB DDR4 3200 MHz</div>
+        <div class="spec-justify">Mínimo recomendado para Windows 11 com multitarefa básica. Permite rodar browser + pacote Office + sistema ERP simultaneamente.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">🔌</span> Placa-mãe</div>
+        <div class="spec-value">Gigabyte H610M K DDR4</div>
+        <div class="spec-justify">Chipset H610 compatível com i3-13xxx. Possui 2 slots DDR4 para futura expansão, portas USB 3.2, saída HDMI integrada — ideal para uso com GPU integrada.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">💾</span> Armazenamento</div>
+        <div class="spec-value">SSD 240 GB SATA + HDD 1 TB</div>
+        <div class="spec-justify">SSD SATA para o SO e programas — boot em ~10s. HDD 1TB para arquivos e dados da empresa. Custo-benefício superior ao SSD NVMe para este perfil.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">🖼️</span> Placa de Vídeo</div>
+        <div class="spec-value">Intel UHD 730 (integrada)</div>
+        <div class="spec-justify">GPU integrada ao i3-13100 é suficiente para resolução Full HD em monitores padrão. Elimina custo de GPU dedicada desnecessária para este perfil.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">⚡</span> Fonte de Alimentação</div>
+        <div class="spec-value">400W 80 Plus White</div>
+        <div class="spec-justify">Potência adequada para o sistema sem GPU dedicada (TDP total ~100W). Certificação 80 Plus garante eficiência energética mínima de 80%.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">📦</span> Gabinete</div>
+        <div class="spec-value">Cougar MX330 Mid-Tower</div>
+        <div class="spec-justify">Gabinete compacto, silencioso e com boa ventilação passiva. Perfil discreto adequado ao ambiente de recepção. Inclui 1 fan traseiro.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">💻</span> Sistema Operacional</div>
+        <div class="spec-value">Windows 11 Home</div>
+        <div class="spec-justify">Compatível com o hardware e pacote Office. Suporte garantido até 2031. Adequado para uso empresarial básico.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">🖥️</span> Monitor</div>
+        <div class="spec-value">LG 22MK430H 21,5" FHD IPS</div>
+        <div class="spec-justify">IPS 1920×1080, 75Hz. Ângulo de visão amplo para monitores de recepção. Inclui HDMI e VGA.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">⌨️</span> Periféricos</div>
+        <div class="spec-value">Kit Teclado + Mouse USB</div>
+        <div class="spec-justify">Kit Logitech MK120 com fio — durável, sem necessidade de pilhas e sem risco de interferência em ambientes com muitos dispositivos.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MÉDIO -->
+  <div class="equip-panel" id="panel-medio">
+    <div class="equip-header" data-cat="medio">
+      <div>
+        <span class="equip-badge medio">Médio Desempenho</span>
+        <h3 style="margin-top:0.5rem">NexCore Studio M3</h3>
+        <p>Design gráfico 2D/3D leve, edição de imagens em alta resolução, multitarefa intensa</p>
+      </div>
+    </div>
+    <div class="specs-grid">
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">⚙️</span> Processador (CPU)</div>
+        <div class="spec-value">Intel Core i5-13400F</div>
+        <div class="spec-justify">10 núcleos (6P+4E) / 16 threads, até 4.6 GHz. Excelente para multitarefa em Adobe Suite. Sufixo "F" indica sem GPU integrada, justificando GPU dedicada abaixo.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">🧠</span> Memória RAM</div>
+        <div class="spec-value">16 GB DDR4 3200 MHz (2×8 GB)</div>
+        <div class="spec-justify">Dual-channel aumenta banda em até 40% vs. canal simples. Photoshop e Illustrator recomendam mínimo 8 GB; 16 GB garante fluidez com múltiplos projetos abertos.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">🔌</span> Placa-mãe</div>
+        <div class="spec-value">MSI PRO B660M-A DDR4</div>
+        <div class="spec-justify">Chipset B660 com VRM reforçado para i5. Suporta até 128 GB DDR4, possui M.2 NVMe e SATA3. PCIe 4.0 x16 para GPU.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">💾</span> Armazenamento</div>
+        <div class="spec-value">SSD NVMe 512 GB + HDD 2 TB</div>
+        <div class="spec-justify">NVMe PCIe 3.0 com velocidade de leitura ~3.500 MB/s vs. ~550 MB/s do SATA. Essencial para abertura rápida de arquivos PSD de grande porte.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">🖼️</span> Placa de Vídeo</div>
+        <div class="spec-value">NVIDIA RTX 3060 12 GB GDDR6</div>
+        <div class="spec-justify">12 GB VRAM suporta texturas em alta resolução e aceleração GPU no Photoshop/Illustrator. CUDA Cores aceleram exportações e filtros. Adequada para render 3D leve.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">⚡</span> Fonte de Alimentação</div>
+        <div class="spec-value">650W 80 Plus Bronze</div>
+        <div class="spec-justify">RTX 3060 consome até 170W + CPU ~65W + demais componentes ~50W = ~285W pico. 650W garante 100% de folga, prolongando vida útil.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">📦</span> Gabinete</div>
+        <div class="spec-value">Cooler Master MasterBox Q500L</div>
+        <div class="spec-justify">Mid-Tower com fluxo de ar otimizado, suporte a water cooler e 4 pontos de ventilação. Necessário para dissipar calor da GPU e CPU em uso prolongado.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">💻</span> Sistema Operacional</div>
+        <div class="spec-value">Windows 11 Pro</div>
+        <div class="spec-justify">Versão Pro inclui BitLocker para proteção de arquivos de projetos, Remote Desktop e suporte a domínio de rede corporativa.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">🖥️</span> Monitor</div>
+        <div class="spec-value">Dell 27" QHD IPS 2560×1440</div>
+        <div class="spec-justify">Resolução QHD oferece 77% mais pixels que FHD, essencial para trabalho com tipografia e detalhes finos em design. 100% sRGB, 99% Rec. 709.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">⌨️</span> Periféricos</div>
+        <div class="spec-value">Teclado Mec. + Mouse 6 botões + Mousepad XL</div>
+        <div class="spec-justify">Teclado mecânico Redragon K552 reduz fadiga em jornadas longas. Mouse Logitech MX Master 3 com 6 botões para atalhos em Adobe Suite.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALTO -->
+  <div class="equip-panel" id="panel-alto">
+    <div class="equip-header" data-cat="alto">
+      <div>
+        <span class="equip-badge alto">Alto Desempenho</span>
+        <h3 style="margin-top:0.5rem">NexCore Pro H7</h3>
+        <p>Edição de vídeo 4K/8K, motion graphics, render 3D pesado, produção audiovisual</p>
+      </div>
+    </div>
+    <div class="specs-grid">
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">⚙️</span> Processador (CPU)</div>
+        <div class="spec-value">Intel Core i9-13900K</div>
+        <div class="spec-justify">24 núcleos (8P+16E) / 32 threads, até 5.8 GHz. Processamento de múltiplas streams de vídeo 4K simultâneas. Essencial para timeline de Premiere/DaVinci sem engasgos.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">🧠</span> Memória RAM</div>
+        <div class="spec-value">64 GB DDR5 5200 MHz (2×32 GB)</div>
+        <div class="spec-justify">DDR5 oferece maior banda e menor latência que DDR4. 64 GB é o mínimo recomendado para edição profissional de vídeo 4K RAW com After Effects e Premiere.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">🔌</span> Placa-mãe</div>
+        <div class="spec-value">ASUS ROG Strix Z790-E DDR5</div>
+        <div class="spec-justify">Chipset Z790 com suporte a XMP 3.0 para DDR5 overclock. VRM 18+1 fases para i9-13900K. PCIe 5.0 x16 e M.2 PCIe 5.0 para máxima transferência.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">💾</span> Armazenamento</div>
+        <div class="spec-value">SSD NVMe PCIe 5.0 2 TB + SSD NVMe 4 TB</div>
+        <div class="spec-justify">PCIe 5.0 NVMe atinge ~12.000 MB/s. Imprescindível para scrubbing de vídeo 4K/8K RAW sem buffer. RAID não recomendado para este caso — dois NVMe separados.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">🖼️</span> Placa de Vídeo</div>
+        <div class="spec-value">NVIDIA RTX 4080 Super 16 GB GDDR6X</div>
+        <div class="spec-justify">16 GB GDDR6X e 10.240 CUDA Cores. NVENC encoder de 8ª geração 2× mais rápido no export. Tensor Cores para IA no DaVinci Resolve. Essencial para render 3D profissional.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">❄️</span> Cooler CPU</div>
+        <div class="spec-value">Corsair iCUE H150i Elite Capellix (AIO 360mm)</div>
+        <div class="spec-justify">i9-13900K tem TDP de 125W com picos de 253W. Water cooler de 360mm é mandatório — cooler ar não suporta essa carga térmica de forma segura em operação contínua.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">⚡</span> Fonte de Alimentação</div>
+        <div class="spec-value">1000W 80 Plus Gold Modular</div>
+        <div class="spec-justify">Consumo estimado: CPU 253W + RTX 4080 320W + demais ~80W = ~653W pico. 1000W oferece folga confortável. Modular reduz cabos e melhora fluxo de ar.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">📦</span> Gabinete</div>
+        <div class="spec-value">Fractal Design Meshify 2 XL</div>
+        <div class="spec-justify">Full-Tower com excelente fluxo de ar frontal direto. Suporta radiadores 360mm na frente e topo. Isolamento acústico para ambiente de trabalho silencioso.</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">💻</span> Sistema Operacional</div>
+        <div class="spec-value">Windows 11 Pro + Adobe CC</div>
+        <div class="spec-justify">Win 11 Pro com suporte a workstation. Licença Adobe CC completa inclui Premiere, After Effects, Photoshop e DaVinci Resolve (gratuito, bundled).</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><span class="icon">🖥️</span> Monitor</div>
+        <div class="spec-value">LG 32UN880 32" 4K IPS Ergo</div>
+        <div class="spec-justify">4K UHD 3840×2160, 99% sRGB, 95% DCI-P3. Monitor de edição profissional. Braço ergonômico integrado libera espaço na mesa. HDR400 para grading de cor.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PREÇOS -->
+<section id="precos">
+  <div class="section-label">03 — Levantamento de Custos</div>
+  <h2 class="section-title">Comparativo de Preços</h2>
+  <p class="section-desc">Pesquisa realizada em 3 fornecedores para cada categoria. Valores referentes a junho/2026.</p>
+
+  <div class="price-tabs">
+    <button class="price-tab active" onclick="showPrice('entrada2')">🔵 Entrada</button>
+    <button class="price-tab" onclick="showPrice('medio2')">🟡 Médio</button>
+    <button class="price-tab" onclick="showPrice('alto2')">🔴 Alto</button>
+  </div>
+
+  <!-- PREÇOS ENTRADA -->
+  <div class="price-panel active" id="panel-entrada2">
+    <div class="price-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Componente</th>
+            <th>KaBuM!</th>
+            <th>Pichau</th>
+            <th>Terabyte Shop</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Intel Core i3-13100</td><td>R$ 649</td><td>R$ 629</td><td>R$ 659</td></tr>
+          <tr><td>8 GB DDR4 3200MHz</td><td>R$ 149</td><td>R$ 139</td><td>R$ 155</td></tr>
+          <tr><td>Placa-mãe H610M</td><td>R$ 499</td><td>R$ 489</td><td>R$ 519</td></tr>
+          <tr><td>SSD 240 GB SATA</td><td>R$ 129</td><td>R$ 119</td><td>R$ 135</td></tr>
+          <tr><td>HDD 1 TB</td><td>R$ 219</td><td>R$ 209</td><td>R$ 225</td></tr>
+          <tr><td>Fonte 400W 80+ White</td><td>R$ 199</td><td>R$ 189</td><td>R$ 205</td></tr>
+          <tr><td>Gabinete Mid-Tower</td><td>R$ 189</td><td>R$ 179</td><td>R$ 199</td></tr>
+          <tr><td>Windows 11 Home</td><td>R$ 499</td><td>R$ 499</td><td>R$ 499</td></tr>
+          <tr><td>Monitor 21,5" FHD IPS</td><td>R$ 799</td><td>R$ 779</td><td>R$ 829</td></tr>
+          <tr><td>Kit Teclado + Mouse</td><td>R$ 89</td><td>R$ 85</td><td>R$ 95</td></tr>
+          <tr class="price-total-row">
+            <td><strong>TOTAL</strong></td>
+            <td><strong>R$ 3.420</strong></td>
+            <td><strong>R$ 3.316 <span class="winner-badge">Melhor preço</span></strong></td>
+            <td><strong>R$ 3.520</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="choice-card">
+      <div class="choice-icon">✅</div>
+      <div class="choice-text">
+        <h4>Fornecedor Escolhido: Pichau</h4>
+        <p>Menor preço total da categoria (R$ 3.316), frete grátis acima de R$ 300, garantia padrão de 12 meses em todos os componentes e plataforma bem avaliada para compras recorrentes.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREÇOS MÉDIO -->
+  <div class="price-panel" id="panel-medio2">
+    <div class="price-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Componente</th>
+            <th>KaBuM!</th>
+            <th>Pichau</th>
+            <th>Terabyte Shop</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Intel Core i5-13400F</td><td>R$ 1.099</td><td>R$ 1.059</td><td>R$ 1.119</td></tr>
+          <tr><td>16 GB DDR4 (2×8 GB)</td><td>R$ 279</td><td>R$ 265</td><td>R$ 289</td></tr>
+          <tr><td>Placa-mãe B660M DDR4</td><td>R$ 699</td><td>R$ 679</td><td>R$ 729</td></tr>
+          <tr><td>SSD NVMe 512 GB</td><td>R$ 329</td><td>R$ 309</td><td>R$ 345</td></tr>
+          <tr><td>HDD 2 TB</td><td>R$ 369</td><td>R$ 349</td><td>R$ 385</td></tr>
+          <tr><td>NVIDIA RTX 3060 12 GB</td><td>R$ 2.199</td><td>R$ 2.149</td><td>R$ 2.249</td></tr>
+          <tr><td>Fonte 650W 80+ Bronze</td><td>R$ 389</td><td>R$ 369</td><td>R$ 409</td></tr>
+          <tr><td>Gabinete Mid-Tower</td><td>R$ 259</td><td>R$ 239</td><td>R$ 279</td></tr>
+          <tr><td>Windows 11 Pro</td><td>R$ 799</td><td>R$ 799</td><td>R$ 799</td></tr>
+          <tr><td>Monitor 27" QHD IPS</td><td>R$ 1.799</td><td>R$ 1.749</td><td>R$ 1.849</td></tr>
+          <tr><td>Periféricos (kit)</td><td>R$ 459</td><td>R$ 429</td><td>R$ 479</td></tr>
+          <tr class="price-total-row">
+            <td><strong>TOTAL</strong></td>
+            <td><strong>R$ 8.679</strong></td>
+            <td><strong>R$ 8.395 <span class="winner-badge">Melhor preço</span></strong></td>
+            <td><strong>R$ 8.931</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="choice-card">
+      <div class="choice-icon">✅</div>
+      <div class="choice-text">
+        <h4>Fornecedor Escolhido: Pichau</h4>
+        <p>Diferença de R$ 284 em relação ao KaBuM (R$ 1.420 na compra de 5 unidades). Pichau oferece prazo de entrega em até 5 dias úteis e notas fiscais para CNPJ simplificadas.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREÇOS ALTO -->
+  <div class="price-panel" id="panel-alto2">
+    <div class="price-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Componente</th>
+            <th>KaBuM!</th>
+            <th>Pichau</th>
+            <th>Terabyte Shop</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Intel Core i9-13900K</td><td>R$ 3.999</td><td>R$ 3.849</td><td>R$ 4.099</td></tr>
+          <tr><td>64 GB DDR5 5200 (2×32)</td><td>R$ 1.899</td><td>R$ 1.799</td><td>R$ 1.949</td></tr>
+          <tr><td>Placa-mãe Z790 DDR5</td><td>R$ 3.499</td><td>R$ 3.299</td><td>R$ 3.599</td></tr>
+          <tr><td>SSD NVMe PCIe 5.0 2 TB</td><td>R$ 1.499</td><td>R$ 1.399</td><td>R$ 1.549</td></tr>
+          <tr><td>SSD NVMe 4 TB</td><td>R$ 1.899</td><td>R$ 1.799</td><td>R$ 1.949</td></tr>
+          <tr><td>NVIDIA RTX 4080 Super 16 GB</td><td>R$ 7.999</td><td>R$ 7.699</td><td>R$ 8.299</td></tr>
+          <tr><td>AIO 360mm</td><td>R$ 899</td><td>R$ 849</td><td>R$ 929</td></tr>
+          <tr><td>Fonte 1000W 80+ Gold Mod.</td><td>R$ 799</td><td>R$ 759</td><td>R$ 829</td></tr>
+          <tr><td>Gabinete Full-Tower</td><td>R$ 899</td><td>R$ 849</td><td>R$ 929</td></tr>
+          <tr><td>Windows 11 Pro</td><td>R$ 799</td><td>R$ 799</td><td>R$ 799</td></tr>
+          <tr><td>Monitor 32" 4K IPS Ergo</td><td>R$ 4.299</td><td>R$ 4.099</td><td>R$ 4.399</td></tr>
+          <tr class="price-total-row">
+            <td><strong>TOTAL</strong></td>
+            <td><strong>R$ 28.489</strong></td>
+            <td><strong>R$ 27.199 <span class="winner-badge">Melhor preço</span></strong></td>
+            <td><strong>R$ 29.329</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="choice-card">
+      <div class="choice-icon">✅</div>
+      <div class="choice-text">
+        <h4>Fornecedor Escolhido: Pichau</h4>
+        <p>Economia de R$ 1.290 por unidade em relação ao KaBuM (R$ 6.450 em 5 máquinas). Terabyte Shop foi descartado por prazo de entrega de até 12 dias úteis e ausência de garantia unificada por kit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PROPOSTA DE INVESTIMENTO -->
+<section id="proposta">
+  <div class="section-label">04 — Investimento Total</div>
+  <h2 class="section-title">Proposta de Investimento</h2>
+  <p class="section-desc">Consolidação do investimento para 15 equipamentos fornecidos pela NexCore Tech à agência de design.</p>
+
+  <div class="invest-grid">
+    <div class="invest-card entrada">
+      <div class="cat-label">🔵 Entrada — NexCore Basic E1</div>
+      <div class="qty">5 unidades</div>
+      <div class="unit-price">R$ 3.316 / unidade (Pichau)</div>
+      <div class="total-price">R$ 16.580</div>
+    </div>
+    <div class="invest-card medio">
+      <div class="cat-label">🟡 Médio — NexCore Studio M3</div>
+      <div class="qty">5 unidades</div>
+      <div class="unit-price">R$ 8.395 / unidade (Pichau)</div>
+      <div class="total-price">R$ 41.975</div>
+    </div>
+    <div class="invest-card alto">
+      <div class="cat-label">🔴 Alto — NexCore Pro H7</div>
+      <div class="qty">5 unidades</div>
+      <div class="unit-price">R$ 27.199 / unidade (Pichau)</div>
+      <div class="total-price">R$ 135.995</div>
+    </div>
+  </div>
+
+  <div class="invest-total">
+    <div>
+      <h3>Investimento Total da Proposta</h3>
+      <p>15 equipamentos · Fornecedor: Pichau · Entrega estimada: 5–7 dias úteis</p>
+      <p style="margin-top:0.5rem;font-size:0.8rem;color:var(--accent3)">✦ Inclui montagem, testes e suporte técnico 30 dias sem custo adicional</p>
+    </div>
+    <div class="grand-total">R$ 194.550</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<hr class="section-divider">
+
+<!-- CONCLUSÃO -->
+<section id="conclusao">
+  <div class="section-label">06 — Conclusão</div>
+  <h2 class="section-title">Conclusão & Referências</h2>
+  <div class="conclusao-card">
+    <h3>Por que a NexCore Tech é a escolha certa?</h3>
+    <p>Esta proposta demonstra que é possível atender diferentes perfis de usuário com equipamentos tecnicamente coerentes e economicamente viáveis. A segmentação em três categorias garante que cada colaborador tenha exatamente o poder computacional necessário para sua função — nem mais, nem menos.</p>
+    <p>A escolha da Pichau como fornecedor principal resultou em economia total de <strong style="color:var(--accent3)">R$ 8.550</strong> em comparação ao segundo colocado (KaBuM), sem comprometer qualidade ou garantia.</p>
+    <p>Todos os componentes foram justificados com base nos conceitos de arquitetura de hardware estudados: TDP, banda de memória, throughput de armazenamento, especificações de GPU e compatibilidade de chipset.</p>
+    <div class="refs">
+      <h4>Referências de Pesquisa de Preços</h4>
+      <div class="refs-list">
+        <a href="https://kabum.com.br" target="_blank">KaBuM!</a>
+        <a href="https://pichau.com.br" target="_blank">Pichau</a>
+        <a href="https://terabyteshop.com.br" target="_blank">Terabyte Shop</a>
+        <a href="https://intel.com" target="_blank">Intel ARK</a>
+        <a href="https://nvidia.com" target="_blank">NVIDIA Specs</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div style="margin-bottom:0.5rem">
+    <span style="color:var(--accent);font-family:'Space Grotesk',sans-serif;font-weight:700">NexCore Tech</span>
+    &nbsp;·&nbsp; Proposta Comercial de Hardware
+  </div>
+  <div>Disciplina: Hardware e Manutenção de Computadores · Curso: Sistemas de Informação — 1º Ano · Apresentação: 18/06/2026</div>
+</footer>
+
+<script>
+  // Tab navigation for equipment
+  function showEquip(cat) {
+    document.querySelectorAll('.equip-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.equip-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('panel-' + cat).classList.add('active');
+    document.querySelector(`.equip-tab[data-cat="${cat}"]`).classList.add('active');
+  }
+
+  // Tab navigation for prices
+  function showPrice(id) {
+    document.querySelectorAll('.price-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.price-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('section[id], .hero');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Animate spec bars on scroll
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.transition = 'width 0.8s ease';
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.criteria-bar').forEach(b => barObserver.observe(b));
+</script>
+</body>
+</html>
